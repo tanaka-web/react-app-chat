@@ -1,8 +1,12 @@
 # dependencies
 node_modules/
 
+# firebase
+.firebase/
+
 # dist
 dist/bundle.js
+dist/boundle.js.map
 
 # editor
 .idea
