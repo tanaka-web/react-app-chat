@@ -1,0 +1,8 @@
+# dependencies
+node_modules/
+
+# dist
+dist/bundle.js
+
+# editor
+.idea
