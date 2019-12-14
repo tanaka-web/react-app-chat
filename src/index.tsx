@@ -1,9 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import {render} from 'react-dom';
+import AppChat from './containers/AppChat';
 
-import { App } from './components/App';
-
-ReactDOM.render(
-  <App hoge="hello" fuga="react" />,
-  document.getElementById('app')
-);
+render(<AppChat />, document.getElementById('app'));
