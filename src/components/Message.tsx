@@ -1,18 +1,6 @@
 import * as React from "react";
-import List from 'material-ui/List/List';
-import ListItem from 'material-ui/List/ListItem';
-import Chip from 'material-ui/Chip';
 import {IMessage} from '../types/Message';
-
-const styles = {
-  chip: {
-    margin: 4,
-  },
-  wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-};
+import styled from "styled-components";
 
 interface IProps {
   key: number;
@@ -22,18 +10,41 @@ interface IProps {
 export default class Message extends React.Component<IProps, {}> {
   render() {
     return (
-      <div className="Message">
-        <List>
-          <ListItem>
-            <span style={{marginBottom: -5}}>@{this.props.message.user_name}</span>
-            <div className="">
-              <Chip style={styles.chip}>
-                {this.props.message.text}
-              </Chip>
-            </div>
-          </ListItem>
-        </List>
-      </div>
+      <Wrapper>
+        <span className="name">{this.props.message.user_name}</span>
+        <div className="message">
+          <p className="text">{this.props.message.text}</p>
+          <p className="datetime">{this.props.message.date}</p>
+        </div>
+      </Wrapper>
     );
   }
 }
+
+const Wrapper = styled.li` 
+  padding: .6rem;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: left;
+  font-size: .9rem;
+  
+  .name {
+    width: 20%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  
+  .message {
+    width: 100%;
+  }
+  
+  .datetime {
+    color: #888;
+    font-size: .8rem;
+    margin-top: .6rem;
+    text-align: right;
+  }
+`;
+

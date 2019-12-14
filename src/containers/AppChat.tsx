@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {firebaseDb} from '../firebase/index'
-import Message from '../components/Message'
-import ChatBox from '../components/ChatBox'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {firebaseDb} from '../firebase/index';
 import {IMessage} from "../types/Message";
+import styled, {createGlobalStyle} from 'styled-components';
+import reset from 'styled-reset';
+import ChatBox from '../components/ChatBox';
+import MessageList from "../components/MessageList";
 
 const messagesRef = firebaseDb.ref('messages');
 
@@ -45,6 +46,7 @@ class AppChat extends React.Component<IProps, IState> {
   }
 
   onTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('change')
     if (event.target.name == 'user_name') {
       this.setState({
         "user_name": event.target.value,
@@ -57,6 +59,7 @@ class AppChat extends React.Component<IProps, IState> {
   }
 
   onButtonClick = () => {
+    console.log('click')
     if (this.state.user_name == "") {
       alert('user_name empty')
       return
@@ -73,21 +76,51 @@ class AppChat extends React.Component<IProps, IState> {
 
   render = () => {
     return (
-      <MuiThemeProvider>
-        <div className="App">
-          <div className="App-header">
-            <h2>Chat</h2>
-          </div>
-          <div className="MessageList">
-            {this.state.messages.map((message: IMessage, index: number) => {
-              return <Message key={index} message={message}/>
-            })}
-          </div>
-          <ChatBox onTextChange={this.onTextChange} onButtonClick={this.onButtonClick}/>
-        </div>
-      </MuiThemeProvider>
+      <>
+        <GlobalStyle/>
+        <Header>
+          <h1>Realtime Chat</h1>
+          <p>React / React Redux / Firebase Realtime Database</p>
+        </Header>
+        <ChatBox onTextChange={this.onTextChange} onButtonClick={this.onButtonClick}/>
+        <MessageList messages={this.state.messages}/>
+      </>
     );
   }
 }
+
+const GlobalStyle = createGlobalStyle`
+  ${reset}
+  
+  color: #666;
+  
+  body {
+    padding: 8px;
+  }
+  
+  input, button, textarea {
+    &:focus {
+      outline: 0;
+      border-color: orange;
+    }
+  }
+`
+
+const Header = styled.header`
+  background: linear-gradient(to right, #72c9ff 0%,#309eff 55%,#4095f7 100%);
+  color: #fff;
+  padding: 1rem .6rem;
+  
+  h1 {
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: 0.01em;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: .8rem;
+  }
+`
 
 export default AppChat;
