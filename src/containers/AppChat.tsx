@@ -1,29 +1,32 @@
 import * as React from 'react';
-import {IMessage} from "../types/Message";
+import {IMessage} from "../types/message";
 import styled, {createGlobalStyle} from 'styled-components';
 import reset from 'styled-reset';
 import ChatBox from '../components/ChatBox';
 import MessageList from "../components/MessageList";
 import {connect} from 'react-redux'
-import {getMessages, pushMessage} from "../actions";
+import {getMessages, pushMessage, userLogin} from "../actions";
 import {bindActionCreators, Dispatch} from "redux";
+import {IUser} from "../types/user";
 
 interface IProps {
-  messages: any
+  messages: IMessage[]
+  user: IUser
   getMessages(): void
   pushMessage(message: IMessage): void
+  userLogin(user: IUser): void
 }
 
 interface IState {
   text: string;
-  user_name: string;
+  userName: string;
   date: string;
   messages: IMessage[];
 }
 
 const initialState: IState = {
   text: "",
-  user_name: "",
+  userName: "",
   date: "",
   messages: []
 }
@@ -31,42 +34,50 @@ const initialState: IState = {
 class AppChat extends React.Component<IProps, IState> {
   state = initialState;
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.props.getMessages()
   }
 
   onTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('change')
-    if (event.target.name == 'user_name') {
+    console.log(this.state.userName)
+    if (event.target.name == 'userName') {
       this.setState({
-        "user_name": event.target.value,
+        userName: event.target.value,
       });
     } else if (event.target.name == 'text') {
       this.setState({
-        "text": event.target.value,
+        text: event.target.value,
       });
     }
   }
 
   onButtonClick = () => {
     console.log('click')
-    if (this.state.user_name == "") {
-      alert('user_name empty')
-      return
-    } else if (this.state.text == "") {
-      alert('text empty')
-      return
+    if (this.props.user.loggedIn) {
+      if (this.state.text == "") {
+        alert('text empty')
+        return
+      }
+      const message = {
+        userName: this.state.userName,
+        text: this.state.text,
+        date: "0000-00-00 00:00:00"
+      }
+      pushMessage(message);
+    } else {
+      if (this.state.userName == "") {
+        alert('userName empty')
+        return
+      }
+      const user = {
+        userName: this.state.userName,
+        loggedIn: true
+      }
+      this.props.userLogin(user)
     }
-    const message = {
-      user_name: this.state.user_name,
-      text: this.state.text,
-      date: "0000-00-00 00:00:00"
-    }
-    console.log(pushMessage)
-    pushMessage(message)
   }
 
-  render = () => {
+  render() {
     return (
       <>
         <GlobalStyle/>
@@ -74,8 +85,10 @@ class AppChat extends React.Component<IProps, IState> {
           <h1>Realtime Chat</h1>
           <p>React / React Redux / Firebase Realtime Database</p>
         </Header>
-        <ChatBox onTextChange={this.onTextChange} onButtonClick={this.onButtonClick}/>
-        <MessageList messages={this.props.messages.messages}/>
+        <ChatBox
+          onTextChange={this.onTextChange}
+          onButtonClick={this.onButtonClick}/>
+        <MessageList messages={this.props.messages}/>
       </>
     );
   }
@@ -116,12 +129,14 @@ const Header = styled.header`
 `
 
 const mapStateToProps = (state: any) => ({
-  messages: state.messages
+  messages: state.message.messages,
+  user: state.user
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getMessages: bindActionCreators(getMessages, dispatch),
-  pushMessage: bindActionCreators(pushMessage, dispatch)
+  pushMessage: bindActionCreators(pushMessage, dispatch),
+  userLogin:(user: IUser) => dispatch(userLogin(user))
 });
 
 export default connect(

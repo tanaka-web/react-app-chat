@@ -1,5 +1,5 @@
 export interface IMessage {
   text: string;
-  user_name: string;
+  userName: string;
   date: string;
 }

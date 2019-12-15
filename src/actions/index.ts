@@ -1,7 +1,9 @@
 import {firebaseDb} from "../firebase";
-import {IMessage} from '../types/Message'
 import {Dispatch} from "redux";
+import {IMessage} from '../types/message'
+import {IUser} from "../types/user";
 
+// message action
 const messagesRef = firebaseDb.ref('messages');
 
 export const GET_MESSAGES_REQUEST = 'GET_MESSAGES_REQUEST';
@@ -35,3 +37,13 @@ export const getMessages = () => {
 export const pushMessage = (message: IMessage) => {
   messagesRef.push(message)
 }
+
+// user action
+export const USER_LOGIN = 'USER_LOGIN'
+export const userLogin = (user: IUser) => {
+  return ({
+    type: USER_LOGIN,
+    user
+  })
+}
+

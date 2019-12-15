@@ -1,5 +1,5 @@
 import * as React from "react";
-import {IMessage} from '../types/Message';
+import {IMessage} from '../types/message';
 import Message from "./Message";
 
 interface IProps {

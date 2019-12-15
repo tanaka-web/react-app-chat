@@ -1,4 +1,4 @@
-import {IMessage} from "../types/Message";
+import {IMessage} from "../types/message";
 import {
   GET_MESSAGES_ERROR,
   GET_MESSAGES_REQUEST,
@@ -12,7 +12,7 @@ const initialState: MessagesState = {
   messages: []
 }
 
-const messages = (state = initialState, action: any) => {
+const message = (state = initialState, action: any) => {
   switch (action.type) {
     case GET_MESSAGES_SUCCESS:
       return {
@@ -26,4 +26,4 @@ const messages = (state = initialState, action: any) => {
   }
 }
 
-export default messages
+export default message

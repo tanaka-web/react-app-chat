@@ -1,5 +1,5 @@
 import * as React from "react";
-import {IMessage} from '../types/Message';
+import {IMessage} from '../types/message';
 import styled from "styled-components";
 
 interface IProps {
@@ -11,7 +11,7 @@ export default class Message extends React.Component<IProps, {}> {
   render() {
     return (
       <Wrapper>
-        <span className="name">{this.props.message.user_name}</span>
+        <span className="name">{this.props.message.userName}</span>
         <div className="message">
           <p className="text">{this.props.message.text}</p>
           <p className="datetime">{this.props.message.date}</p>
@@ -33,7 +33,9 @@ const Wrapper = styled.li`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-weight: 500;
+    font-weight: 600;
+    box-sizing: border-box;
+    padding-right: .4rem;
   }
   
   .message {

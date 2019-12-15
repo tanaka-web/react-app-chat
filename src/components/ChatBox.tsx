@@ -1,22 +1,36 @@
-import * as React from "react";
-import styled from "styled-components";
+import * as React from "react"
+import styled from "styled-components"
+import {connect} from "react-redux"
+import {IUser} from "../types/user"
 
 interface IProps {
-  onTextChange(event: React.ChangeEvent<HTMLInputElement>): void;
-  onButtonClick(): void;
+  onTextChange(event: React.ChangeEvent<HTMLInputElement>): void
+
+  onButtonClick(): void
+
+  user: IUser
 }
 
 interface IState {
 }
 
-export default class ChatBox extends React.Component<IProps, IState> {
+class ChatBox extends React.Component<IProps, IState> {
   render() {
     return (
       <Wrapper>
-        <p></p>
-        <input name='user_name' onChange={(event) => this.props.onTextChange(event)} placeholder="お名前をどうぞ"/>
-        <input name='text' onChange={(event) => this.props.onTextChange(event)} placeholder="メッセージをどうぞ"/>
-        <button onClick={() => this.props.onButtonClick()}>ログイン</button>
+        {!this.props.user.loggedIn ? (
+          <div>
+            <input name='userName' onChange={(event) => this.props.onTextChange(event)} placeholder="お名前をどうぞ"/>
+          </div>
+        ) : (
+          <div>
+            <p>{this.props.user.userName}</p>
+            <input name='text' onChange={(event) => this.props.onTextChange(event)} placeholder="メッセージをどうぞ"/>
+          </div>
+        )}
+        <button onClick={() => this.props.onButtonClick()}>
+          {this.props.user.loggedIn ? "送信" : "ログイン"}
+        </button>
       </Wrapper>
     );
   }
@@ -29,14 +43,30 @@ const Wrapper = styled.div`
   justify-content: left;
   background: linear-gradient(to right, #eaeaea 0%,#e8e8e8 60%,#e0e0e0 100%);
   
-  input, textarea {
-    border: 1px solid #aaa;
-    border-radius: 100px;
-    padding: .6rem .8rem;
-    font-size: .9rem;
-    width: 100%;
+  > div {
     flex: 1;
-    max-height: 1.2rem;
+    width: 100%;
+    display: flex;
+    
+    > p {
+      width: 30%;
+      box-sizing: border-box;
+      padding-right: .4rem;
+      display: flex;
+      align-items: center;
+      font-size: .9rem;
+      font-weight: 600;
+    }
+    
+    
+    > input, > textarea {
+      border: 1px solid #aaa;
+      border-radius: 100px;
+      padding: .6rem .8rem;
+      font-size: .9rem;
+      width: 100%;
+      max-height: 1.2rem;
+    }
   }
   
   button {
@@ -45,6 +75,14 @@ const Wrapper = styled.div`
     font-size: .9rem;
     background: #4095f7;
     color: #fff;
-    margin-left: .6rem;
+    margin-left: .4rem;
   }
 `;
+
+const mapStateToProps = (state: any) => ({
+  user: state.user
+});
+
+export default connect(
+  mapStateToProps
+)(ChatBox);
