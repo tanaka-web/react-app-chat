@@ -8,6 +8,7 @@ import {connect} from 'react-redux'
 import {getMessages, pushMessage, userLogin} from "../actions";
 import {bindActionCreators, Dispatch} from "redux";
 import {IUser} from "../types/user";
+import * as moment from "moment";
 
 interface IProps {
   messages: IMessage[]
@@ -39,7 +40,6 @@ class AppChat extends React.Component<IProps, IState> {
   }
 
   onTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(this.state.userName)
     if (event.target.name == 'userName') {
       this.setState({
         userName: event.target.value,
@@ -52,16 +52,16 @@ class AppChat extends React.Component<IProps, IState> {
   }
 
   onButtonClick = () => {
-    console.log('click')
     if (this.props.user.loggedIn) {
       if (this.state.text == "") {
         alert('text empty')
         return
       }
+      const datetime = moment().format()
       const message = {
         userName: this.state.userName,
         text: this.state.text,
-        date: "0000-00-00 00:00:00"
+        date: datetime
       }
       pushMessage(message);
     } else {

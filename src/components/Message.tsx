@@ -1,6 +1,8 @@
 import * as React from "react";
 import {IMessage} from '../types/message';
 import styled from "styled-components";
+import Moment from "react-moment";
+import 'moment/locale/ja';
 
 interface IProps {
   key: number;
@@ -14,7 +16,7 @@ export default class Message extends React.Component<IProps, {}> {
         <span className="name">{this.props.message.userName}</span>
         <div className="message">
           <p className="text">{this.props.message.text}</p>
-          <p className="datetime">{this.props.message.date}</p>
+          <Moment className="datetime" fromNow>{this.props.message.date}</Moment>
         </div>
       </Wrapper>
     );
@@ -43,6 +45,7 @@ const Wrapper = styled.li`
   }
   
   .datetime {
+    display: block;
     color: #888;
     font-size: .8rem;
     margin-top: .6rem;

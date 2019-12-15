@@ -7,7 +7,6 @@ const initialState: IUser = {
 }
 
 const user = (state = initialState, action: any) => {
-  console.log(action)
   switch (action.type) {
     case USER_LOGIN:
       return {
