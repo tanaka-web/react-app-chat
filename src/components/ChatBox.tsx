@@ -5,7 +5,9 @@ import {IUser} from "../types/user"
 
 interface IProps {
   onTextChange(event: React.ChangeEvent<HTMLInputElement>): void
+
   onButtonClick(): void
+
   user: IUser
 }
 
@@ -26,7 +28,10 @@ class ChatBox extends React.Component<IProps, IState> {
             <input name='text' onChange={(event) => this.props.onTextChange(event)} placeholder="メッセージをどうぞ"/>
           </div>
         )}
-        <button onClick={() => this.props.onButtonClick()}>
+        <button type="submit" onClick={(event) => {
+          event.preventDefault()
+          this.props.onButtonClick()
+        }}>
           {this.props.user.loggedIn ? "送信" : "ログイン"}
         </button>
       </Wrapper>
@@ -34,7 +39,7 @@ class ChatBox extends React.Component<IProps, IState> {
   }
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   position: fixed;
   bottom: 0;
   left: 0;
@@ -70,7 +75,7 @@ const Wrapper = styled.div`
       border-radius: 100px;
       padding: .6rem .8rem;
       width: 100%;
-      // max-height: 1.2rem;
+      max-height: 1.2rem;
     }
   }
   

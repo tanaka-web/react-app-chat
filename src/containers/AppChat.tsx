@@ -13,11 +13,8 @@ import * as moment from "moment";
 interface IProps {
   messages: IMessage[]
   user: IUser
-
   getMessages(): void
-
   pushMessage(message: IMessage): void
-
   userLogin(user: IUser): void
 }
 
@@ -57,7 +54,7 @@ class AppChat extends React.Component<IProps, IState> {
   onButtonClick = () => {
     if (this.props.user.loggedIn) {
       if (this.state.text == "") {
-        alert('text empty')
+        alert('メッセージを入力してください')
         return
       }
       const datetime = moment().format()
@@ -72,7 +69,7 @@ class AppChat extends React.Component<IProps, IState> {
       window.scroll(0, bottom);
     } else {
       if (this.state.userName == "") {
-        alert('userName empty')
+        alert('お名前を入力してください')
         return
       }
       const user = {
