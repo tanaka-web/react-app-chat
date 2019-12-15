@@ -21,14 +21,14 @@ interface IProps {
 interface IState {
   text: string;
   userName: string;
-  date: string;
+  datetime: string;
   messages: IMessage[];
 }
 
 const initialState: IState = {
   text: "",
   userName: "",
-  date: "",
+  datetime: "",
   messages: []
 }
 
@@ -61,7 +61,7 @@ class AppChat extends React.Component<IProps, IState> {
       const message = {
         userName: this.state.userName,
         text: this.state.text,
-        date: datetime
+        datetime: datetime
       }
       pushMessage(message);
     } else {

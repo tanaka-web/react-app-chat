@@ -16,7 +16,7 @@ export default class Message extends React.Component<IProps, {}> {
         <span className="name">{this.props.message.userName}</span>
         <div className="message">
           <p className="text">{this.props.message.text}</p>
-          <Moment className="datetime" fromNow>{this.props.message.date}</Moment>
+          <Moment className="datetime" fromNow>{this.props.message.datetime}</Moment>
         </div>
       </Wrapper>
     );
