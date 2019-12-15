@@ -37,11 +37,16 @@ class ChatBox extends React.Component<IProps, IState> {
 }
 
 const Wrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  box-sizing: border-box;
   padding: .6rem;
   border-bottom: 1px solid #eee;
   display: flex;
   justify-content: left;
-  background: linear-gradient(to right, #eaeaea 0%,#e8e8e8 60%,#e0e0e0 100%);
+  background: linear-gradient(to right, #e8e8e8 0%,#e8e8e8 60%,#e0e0e0 100%);
   
   > div {
     flex: 1;
@@ -56,6 +61,9 @@ const Wrapper = styled.div`
       align-items: center;
       font-size: .9rem;
       font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     
     
@@ -63,13 +71,13 @@ const Wrapper = styled.div`
       border: 1px solid #aaa;
       border-radius: 100px;
       padding: .6rem .8rem;
-      font-size: .9rem;
       width: 100%;
-      max-height: 1.2rem;
+      // max-height: 1.2rem;
     }
   }
   
   button {
+    border: 0;
     border-radius: 100px;
     padding: .4rem .8rem;
     font-size: .9rem;
