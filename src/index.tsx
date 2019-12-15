@@ -1,10 +1,19 @@
 import * as React from 'react';
 import {render} from 'react-dom';
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import thunk from 'redux-thunk';
 import AppChat from './containers/AppChat';
-import {createGlobalStyle} from 'styled-components'
-import reset from 'styled-reset'
-createGlobalStyle`
-  ${reset}
-`
+import rootReducer from './reducers/index';
 
-render(<AppChat />, document.getElementById('app'));
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunk)
+)
+
+render(
+  <Provider store={store}>
+    <AppChat/>
+  </Provider>,
+  document.getElementById('app')
+);

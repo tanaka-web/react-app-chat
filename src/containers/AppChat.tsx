@@ -1,14 +1,17 @@
 import * as React from 'react';
-import {firebaseDb} from '../firebase/index';
 import {IMessage} from "../types/Message";
 import styled, {createGlobalStyle} from 'styled-components';
 import reset from 'styled-reset';
 import ChatBox from '../components/ChatBox';
 import MessageList from "../components/MessageList";
-
-const messagesRef = firebaseDb.ref('messages');
+import {connect} from 'react-redux'
+import {getMessages, pushMessage} from "../actions";
+import {bindActionCreators, Dispatch} from "redux";
 
 interface IProps {
+  messages: any
+  getMessages(): void
+  pushMessage(message: IMessage): void
 }
 
 interface IState {
@@ -29,20 +32,7 @@ class AppChat extends React.Component<IProps, IState> {
   state = initialState;
 
   componentDidMount = () => {
-    messagesRef.on('child_added', (snapshot: any) => {
-      const message = snapshot.val()
-      const messages = this.state.messages
-
-      messages.push({
-        'text': message.text,
-        'user_name': message.user_name,
-        'date': "0000-00-00 00:00:00"
-      })
-
-      this.setState({
-        messages
-      });
-    })
+    this.props.getMessages()
   }
 
   onTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,11 +57,13 @@ class AppChat extends React.Component<IProps, IState> {
       alert('text empty')
       return
     }
-    messagesRef.push({
-      "user_name": this.state.user_name,
-      "text": this.state.text,
-      "date": "0000-00-00 00:00:00"
-    })
+    const message = {
+      user_name: this.state.user_name,
+      text: this.state.text,
+      date: "0000-00-00 00:00:00"
+    }
+    console.log(pushMessage)
+    pushMessage(message)
   }
 
   render = () => {
@@ -83,7 +75,7 @@ class AppChat extends React.Component<IProps, IState> {
           <p>React / React Redux / Firebase Realtime Database</p>
         </Header>
         <ChatBox onTextChange={this.onTextChange} onButtonClick={this.onButtonClick}/>
-        <MessageList messages={this.state.messages}/>
+        <MessageList messages={this.props.messages.messages}/>
       </>
     );
   }
@@ -123,4 +115,16 @@ const Header = styled.header`
   }
 `
 
-export default AppChat;
+const mapStateToProps = (state: any) => ({
+  messages: state.messages
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  getMessages: bindActionCreators(getMessages, dispatch),
+  pushMessage: bindActionCreators(pushMessage, dispatch)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppChat);
