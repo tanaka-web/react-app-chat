@@ -3,7 +3,7 @@ node_modules/
 yarn-error.log
 
 # firebase
-.firebase/
+src/firebase/config.ts
 
 # dist
 dist/bundle.js
