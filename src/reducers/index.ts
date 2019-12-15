@@ -1,10 +1,10 @@
-import {combineReducers} from 'redux'
-import message from './message'
-import user from './user'
+import { combineReducers } from 'redux';
+import message from './message';
+import user from './user';
 
 const rootReducer = combineReducers({
   message,
-  user
-})
+  user,
+});
 
-export default rootReducer
+export default rootReducer;

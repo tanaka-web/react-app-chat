@@ -1,4 +1,4 @@
 export interface IUser {
-  userName?: string,
-  loggedIn: boolean
+  userName?: string;
+  loggedIn: boolean;
 }

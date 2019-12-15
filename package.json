@@ -10,7 +10,7 @@
     "build": "webpack --mode production",
     "deploy": "yarn build && firebase deploy",
     "lint": "eslint src --ext ts,tsx; exit 0",
-    "lint:fix": "eslint src --ext ts,tsx; exit 0 --fix"
+    "lint:fix": "eslint src --fix --ext ts,tsx; exit 0"
   },
   "dependencies": {
     "@types/react-redux": "^7.1.5",

@@ -13,6 +13,7 @@
     "prefer-promise-reject-errors": ["off"],
     "react/jsx-filename-extension": ["off"],
     "react/prop-types": ["off"],
-    "no-return-assign": ["off"]
+    "no-return-assign": ["off"],
+    "@typescript-eslint/interface-name-prefix": ["off"]
   }
 }

@@ -1,29 +1,23 @@
-import {IMessage} from "../types/message";
-import {
-  GET_MESSAGES_ERROR,
-  GET_MESSAGES_REQUEST,
-  GET_MESSAGES_SUCCESS
-} from '../actions'
+import { IMessage } from '../types/message';
+import { SET_MESSAGES } from '../actions/message';
 
-export type MessagesState = {
-  messages: IMessage[],
-}
-const initialState: MessagesState = {
-  messages: []
-}
+export type MessageState = {
+  messages: IMessage[];
+};
+const initialState: MessageState = {
+  messages: [],
+};
 
 const message = (state = initialState, action: any) => {
   switch (action.type) {
-    case GET_MESSAGES_SUCCESS:
+    case SET_MESSAGES:
       return {
         ...state,
-        messages: action.messages
-      }
-    case GET_MESSAGES_ERROR:
-    case GET_MESSAGES_REQUEST:
+        messages: action.messages,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default message
+export default message;

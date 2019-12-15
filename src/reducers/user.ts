@@ -1,10 +1,10 @@
-import {IUser} from "../types/user";
-import {USER_LOGIN} from '../actions'
+import { IUser } from '../types/user';
+import { USER_LOGIN } from '../actions/user';
 
 const initialState: IUser = {
-  userName: "",
-  loggedIn: false
-}
+  userName: '',
+  loggedIn: false,
+};
 
 const user = (state = initialState, action: any) => {
   switch (action.type) {
@@ -12,11 +12,11 @@ const user = (state = initialState, action: any) => {
       return {
         ...state,
         userName: action.user.userName,
-        loggedIn: action.user.loggedIn
-      }
+        loggedIn: action.user.loggedIn,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default user
+export default user;
