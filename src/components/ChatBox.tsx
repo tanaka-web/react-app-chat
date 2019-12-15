@@ -5,9 +5,7 @@ import {IUser} from "../types/user"
 
 interface IProps {
   onTextChange(event: React.ChangeEvent<HTMLInputElement>): void
-
   onButtonClick(): void
-
   user: IUser
 }
 
@@ -84,6 +82,7 @@ const Wrapper = styled.div`
     background: #4095f7;
     color: #fff;
     margin-left: .4rem;
+    min-width: 72px;
   }
 `;
 

@@ -10,6 +10,12 @@ interface IProps {
 }
 
 export default class Message extends React.Component<IProps, {}> {
+  componentDidMount(): void {
+    const element = document.documentElement;
+    const bottom = element.scrollHeight - element.clientHeight;
+    window.scroll(0, bottom);
+  }
+
   render() {
     return (
       <Wrapper>
@@ -31,7 +37,7 @@ const Wrapper = styled.li`
   font-size: .9rem;
   
   .name {
-    width: 20%;
+    width: 25%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
