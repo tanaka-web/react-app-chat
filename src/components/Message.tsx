@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Moment from 'react-moment';
 import 'moment/locale/ja';
 import { useEffect } from 'react';
-import { animateScroll } from 'react-scroll';
 
 interface IProps {
   message: IMessage;
@@ -12,7 +11,9 @@ interface IProps {
 
 export const Message: React.SFC<IProps> = props => {
   useEffect((): void => {
-    animateScroll.scrollToBottom();
+    const element = document.documentElement;
+    const bottom = element.scrollHeight - element.clientHeight;
+    window.scroll(0, bottom);
   }, []);
 
   return (
