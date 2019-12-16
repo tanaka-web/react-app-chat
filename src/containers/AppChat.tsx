@@ -10,6 +10,7 @@ import { userLogin } from '../actions/user';
 import { bindActionCreators, Dispatch } from 'redux';
 import { IUser } from '../types/user';
 import * as moment from 'moment';
+import { animateScroll } from 'react-scroll/modules';
 
 interface IProps {
   messages: IMessage[];
@@ -34,9 +35,10 @@ class AppChat extends React.Component<IProps, IState> {
 
   componentDidMount(): void {
     this.props.getMessages();
+    animateScroll.scrollToBottom();
   }
 
-  onTextChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  onTextChange = (event: any): void => {
     if (event.target.name == 'userName') {
       this.setState({
         userName: event.target.value,
@@ -61,12 +63,10 @@ class AppChat extends React.Component<IProps, IState> {
         datetime: datetime,
       };
       pushMessage(message);
-      const element = document.documentElement;
-      const bottom = element.scrollHeight - element.clientHeight;
+      animateScroll.scrollToBottom();
       this.setState({
         text: '',
       });
-      window.scroll(0, bottom);
     } else {
       if (this.state.userName === '') {
         alert('お名前を入力してください');
