@@ -1,12 +1,14 @@
 import { IUser } from '../types/user';
-import { USER_LOGIN } from '../actions/user';
+import { USER_LOGIN, TUserActions } from '../actions/user';
 
-const initialState: IUser = {
+export type TUserState = IUser;
+
+const initialState: TUserState = {
   userName: '',
   loggedIn: false,
 };
 
-const user = (state = initialState, action: any) => {
+const user = (state = initialState, action: TUserActions): TUserState => {
   switch (action.type) {
     case USER_LOGIN:
       return {

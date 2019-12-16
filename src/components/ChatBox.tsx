@@ -5,9 +5,10 @@ import { IUser } from '../types/user';
 import { getMessages, pushMessage } from '../actions/message';
 import { animateScroll } from 'react-scroll/modules';
 import { bindActionCreators, Dispatch } from 'redux';
-import { userLogin } from '../actions/user';
+import { TUserActions, userLogin } from '../actions/user';
 import { IMessage } from '../types/message';
 import * as moment from 'moment';
+import { TReduxState } from '../reducers';
 
 interface IProps {
   user: IUser;
@@ -28,7 +29,7 @@ const initialState: IState = {
 class ChatBox extends React.Component<IProps, IState> {
   state = initialState;
 
-  onTextChange = (event: any): void => {
+  onTextChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.name == 'userName') {
       this.setState({
         userName: event.target.value,
@@ -125,7 +126,7 @@ const Wrapper = styled.form`
     display: flex;
 
     > p {
-      width: 30%;
+      width: 28%;
       box-sizing: border-box;
       padding-right: 0.4rem;
       display: flex;
@@ -159,14 +160,14 @@ const Wrapper = styled.form`
   }
 `;
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: TReduxState): TReduxState => ({
   user: state.user,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getMessages: bindActionCreators(getMessages, dispatch),
   pushMessage: bindActionCreators(pushMessage, dispatch),
-  userLogin: (user: IUser) => dispatch(userLogin(user)),
+  userLogin: (user: IUser): TUserActions => dispatch(userLogin(user)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatBox);

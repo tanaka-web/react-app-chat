@@ -1,14 +1,14 @@
 import { IMessage } from '../types/message';
-import { SET_MESSAGES } from '../actions/message';
+import { SET_MESSAGES, TMessageActions } from '../actions/message';
 
-export type MessageState = {
+export type TMessageState = {
   messages: IMessage[];
 };
-const initialState: MessageState = {
+const initialState: TMessageState = {
   messages: [],
 };
 
-const message = (state = initialState, action: any) => {
+const message = (state = initialState, action: TMessageActions): TMessageState => {
   switch (action.type) {
     case SET_MESSAGES:
       return {

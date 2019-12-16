@@ -8,9 +8,10 @@ import { connect } from 'react-redux';
 import { getMessages } from '../actions/message';
 import { bindActionCreators, Dispatch } from 'redux';
 import { animateScroll } from 'react-scroll/modules';
+import { TReduxState } from '../reducers';
 
 interface IProps {
-  messages: IMessage[];
+  message: { messages: IMessage[] };
   getMessages(): void;
 }
 
@@ -28,7 +29,7 @@ class AppChat extends React.Component<IProps, {}> {
           <h1>Realtime Chat</h1>
           <p>React / React Redux / Firebase Realtime Database</p>
         </Header>
-        <MessageList messages={this.props.messages} />
+        <MessageList messages={this.props.message.messages} />
         <ChatBox />
       </>
     );
@@ -76,8 +77,8 @@ const Header = styled.header`
   }
 `;
 
-const mapStateToProps = (state: any) => ({
-  messages: state.message.messages,
+const mapStateToProps = (state: TReduxState): TReduxState => ({
+  message: state.message,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
