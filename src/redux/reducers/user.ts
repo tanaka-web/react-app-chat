@@ -1,4 +1,4 @@
-import { IUser } from '../types/user';
+import { IUser } from '../../types/user';
 import { USER_LOGIN, TUserActions } from '../actions/user';
 
 export type TUserState = IUser;

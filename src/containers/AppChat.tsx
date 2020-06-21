@@ -7,8 +7,8 @@ import { animateScroll } from 'react-scroll/modules';
 import { IMessage } from '../types/message';
 import ChatBox from '../components/ChatBox';
 import { MessageList } from '../components/MessageList';
-import { getMessages } from '../actions/message';
-import { TReduxState } from '../reducers';
+import { getMessages } from '../redux/actions/message';
+import { TReduxState } from '../redux/reducers';
 
 interface IProps {
   message: { messages: IMessage[] };

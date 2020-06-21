@@ -1,6 +1,6 @@
-import { firebaseDb } from '../firebase';
+import { firebaseDb } from '../../firebase';
 import { Dispatch } from 'redux';
-import { IMessage } from '../types/message';
+import { IMessage } from '../../types/message';
 
 // message action
 const messagesRef = firebaseDb.ref('messages');

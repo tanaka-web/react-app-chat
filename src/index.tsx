@@ -4,7 +4,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import AppChat from './containers/AppChat';
-import rootReducer from './reducers/index';
+import rootReducer from './redux/reducers/index';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 

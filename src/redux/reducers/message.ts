@@ -1,4 +1,4 @@
-import { IMessage } from '../types/message';
+import { IMessage } from '../../types/message';
 import { SET_MESSAGES, TMessageActions } from '../actions/message';
 
 export type TMessageState = {
