@@ -1,14 +1,14 @@
 import * as React from 'react';
-import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { IUser } from '../types/user';
-import { getMessages, pushMessage } from '../actions/message';
-import { animateScroll } from 'react-scroll/modules';
 import { bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { animateScroll } from 'react-scroll/modules';
+import { TReduxState } from '../reducers';
+import { getMessages, pushMessage } from '../actions/message';
 import { TUserActions, userLogin } from '../actions/user';
 import { IMessage } from '../types/message';
+import { IUser } from '../types/user';
 import * as moment from 'moment';
-import { TReduxState } from '../reducers';
 
 interface IProps {
   user: IUser;

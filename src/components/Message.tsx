@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { IMessage } from '../types/message';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import Moment from 'react-moment';
 import 'moment/locale/ja';
-import { useEffect } from 'react';
+import { IMessage } from '../types/message';
 
 interface IProps {
   message: IMessage;

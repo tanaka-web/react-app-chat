@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { IMessage } from '../types/message';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, InterpolationValue } from 'styled-components';
 import reset from 'styled-reset';
-import ChatBox from '../components/ChatBox';
-import { MessageList } from '../components/MessageList';
 import { connect } from 'react-redux';
-import { getMessages } from '../actions/message';
 import { bindActionCreators, Dispatch } from 'redux';
 import { animateScroll } from 'react-scroll/modules';
+import { IMessage } from '../types/message';
+import ChatBox from '../components/ChatBox';
+import { MessageList } from '../components/MessageList';
+import { getMessages } from '../actions/message';
 import { TReduxState } from '../reducers';
 
 interface IProps {
@@ -24,7 +24,7 @@ class AppChat extends React.Component<IProps, {}> {
   render() {
     return (
       <>
-        <GlobalStyle />
+        <GlobalStyle reset={reset} />
         <Header>
           <h1>Realtime Chat</h1>
           <p>React / React Redux / Firebase Realtime Database</p>
@@ -36,9 +36,8 @@ class AppChat extends React.Component<IProps, {}> {
   }
 }
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle<{ reset?: InterpolationValue }>`
   ${reset}
-  
   body {
     font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', メイリオ, Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
     color: #555;

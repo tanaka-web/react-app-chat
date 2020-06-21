@@ -1,7 +1,7 @@
 import * as React from 'react';
+import styled from 'styled-components';
 import { IMessage } from '../types/message';
 import { Message } from './Message';
-import styled from 'styled-components';
 
 interface IProps {
   messages: IMessage[];
