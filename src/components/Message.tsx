@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import Moment from 'react-moment';
@@ -9,7 +9,7 @@ interface IProps {
   message: IMessage;
 }
 
-export const Message: React.SFC<IProps> = props => {
+export const Message = ({ message }: IProps) => {
   useEffect((): void => {
     const element = document.documentElement;
     const bottom = element.scrollHeight - element.clientHeight;
@@ -18,11 +18,11 @@ export const Message: React.SFC<IProps> = props => {
 
   return (
     <Wrapper>
-      <span className="name">{props.message.userName}</span>
+      <span className="name">{message.userName}</span>
       <div className="message">
-        <p className="text">{props.message.text}</p>
+        <p className="text">{message.text}</p>
         <Moment className="datetime" fromNow>
-          {props.message.datetime}
+          {message.datetime}
         </Moment>
       </div>
     </Wrapper>

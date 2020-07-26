@@ -1,112 +1,95 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import { animateScroll } from 'react-scroll/modules';
+import moment from 'moment';
+import styled from 'styled-components';
 import { TReduxState } from '../redux/reducers';
 import { getMessages, pushMessage } from '../redux/actions/message';
 import { TUserActions, userLogin } from '../redux/actions/user';
 import { IMessage } from '../types/message';
 import { IUser } from '../types/user';
-import * as moment from 'moment';
 
 interface IProps {
   user: IUser;
-  pushMessage(message: IMessage): void;
-  userLogin(user: IUser): void;
+  pushMessage?(message: IMessage): void;
+  userLogin?(user: IUser): void;
 }
 
-interface IState {
-  text: string;
-  userName: string;
-}
+const ChatBox = ({ user, pushMessage, userLogin }: IProps) => {
+  const [text, setText] = useState<string>();
+  const [userName, setUserName] = useState<string>();
 
-const initialState: IState = {
-  text: '',
-  userName: '',
-};
-
-class ChatBox extends React.Component<IProps, IState> {
-  state = initialState;
-
-  onTextChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const onTextChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.name == 'userName') {
-      this.setState({
-        userName: event.target.value,
-      });
+      setUserName(event.target.value);
     } else if (event.target.name == 'text') {
-      this.setState({
-        text: event.target.value,
-      });
+      setText(event.target.value);
     }
   };
 
-  onButtonClick = (): void => {
-    if (this.props.user.loggedIn) {
-      if (this.state.text === '') {
+  const onButtonClick = (): void => {
+    if (user.loggedIn) {
+      if (text === '') {
         alert('メッセージを入力してください');
         return;
       }
       const datetime = moment().format();
       const message = {
-        userName: this.state.userName,
-        text: this.state.text,
+        userName: userName,
+        text: text,
         datetime: datetime,
       };
       pushMessage(message);
       animateScroll.scrollToBottom();
-      this.setState({
-        text: '',
-      });
+      setText('');
     } else {
-      if (this.state.userName === '') {
+      if (userName === '') {
         alert('お名前を入力してください');
         return;
       }
       const user = {
-        userName: this.state.userName,
+        userName: userName,
         loggedIn: true,
       };
-      this.props.userLogin(user);
+      userLogin(user);
     }
   };
 
-  render() {
-    return (
-      <Wrapper>
-        {!this.props.user.loggedIn ? (
-          <div>
-            <input
-              name="userName"
-              value={this.state.userName}
-              onChange={(event): void => this.onTextChange(event)}
-              placeholder="お名前をどうぞ"
-            />
-          </div>
-        ) : (
-          <div>
-            <p>{this.props.user.userName}</p>
-            <input
-              name="text"
-              value={this.state.text}
-              onChange={(event): void => this.onTextChange(event)}
-              placeholder="メッセージをどうぞ"
-            />
-          </div>
-        )}
-        <button
-          type="submit"
-          onClick={(event): void => {
-            event.preventDefault();
-            this.onButtonClick();
-          }}
-        >
-          {this.props.user.loggedIn ? '送信' : 'ログイン'}
-        </button>
-      </Wrapper>
-    );
-  }
-}
+  return (
+    <Wrapper>
+      {!user.loggedIn ? (
+        <div>
+          <input
+            name="userName"
+            value={userName}
+            onChange={(event): void => onTextChange(event)}
+            placeholder="お名前をどうぞ"
+          />
+        </div>
+      ) : (
+        <div>
+          <p>{user.userName}</p>
+          <input
+            name="text"
+            value={text}
+            onChange={(event): void => onTextChange(event)}
+            placeholder="メッセージをどうぞ"
+          />
+        </div>
+      )}
+      <button
+        type="submit"
+        onClick={(event): void => {
+          event.preventDefault();
+          onButtonClick();
+        }}
+      >
+        {user.loggedIn ? '送信' : 'ログイン'}
+      </button>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.form`
   position: fixed;

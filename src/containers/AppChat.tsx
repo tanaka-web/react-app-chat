@@ -1,8 +1,8 @@
-import * as React from 'react';
-import styled, { createGlobalStyle, InterpolationValue } from 'styled-components';
-import reset from 'styled-reset';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import styled, { createGlobalStyle, FlattenSimpleInterpolation } from 'styled-components';
+import reset from 'styled-reset';
 import { animateScroll } from 'react-scroll/modules';
 import { IMessage } from '../types/message';
 import ChatBox from '../components/ChatBox';
@@ -15,28 +15,26 @@ interface IProps {
   getMessages(): void;
 }
 
-class AppChat extends React.Component<IProps, {}> {
-  componentDidMount(): void {
-    this.props.getMessages();
+const AppChat = ({ message, getMessages }: IProps) => {
+  useEffect(() => {
+    getMessages();
     animateScroll.scrollToBottom();
-  }
+  }, []);
 
-  render() {
-    return (
-      <>
-        <GlobalStyle reset={reset} />
-        <Header>
-          <h1>Realtime Chat</h1>
-          <p>React / React Redux / Firebase Realtime Database</p>
-        </Header>
-        <MessageList messages={this.props.message.messages} />
-        <ChatBox />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <GlobalStyle reset={reset} />
+      <Header>
+        <h1>Realtime Chat</h1>
+        <p>React / React Redux / Firebase Realtime Database</p>
+      </Header>
+      <MessageList messages={message.messages} />
+      <ChatBox />
+    </>
+  );
+};
 
-const GlobalStyle = createGlobalStyle<{ reset?: InterpolationValue }>`
+const GlobalStyle = createGlobalStyle<{ reset?: FlattenSimpleInterpolation }>`
   ${reset}
   body {
     font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', メイリオ, Meiryo, 'ＭＳ Ｐゴシック', sans-serif;

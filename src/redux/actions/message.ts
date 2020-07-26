@@ -1,5 +1,5 @@
-import { firebaseDb } from '../../firebase';
 import { Dispatch } from 'redux';
+import { firebaseDb } from '../../firebase';
 import { IMessage } from '../../types/message';
 
 // message action

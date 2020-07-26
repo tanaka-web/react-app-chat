@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { IMessage } from '../types/message';
 import { Message } from './Message';
@@ -7,12 +7,12 @@ interface IProps {
   messages: IMessage[];
 }
 
-export const MessageList: React.SFC<IProps> = props => {
+export const MessageList = ({ messages }: IProps) => {
   return (
     <Wrapper>
-      {props.messages.map((message: IMessage, index: number) => {
-        return <Message key={index} message={message} />;
-      })}
+      {messages.map((message, idx) => (
+        <Message key={idx} message={message} />
+      ))}
     </Wrapper>
   );
 };
