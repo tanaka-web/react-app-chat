@@ -1,23 +1,12 @@
 import React, { useEffect } from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
 import styled, { createGlobalStyle, FlattenSimpleInterpolation } from 'styled-components';
 import reset from 'styled-reset';
 import { animateScroll } from 'react-scroll/modules';
-import { IMessage } from '../types/message';
 import ChatBox from '../components/ChatBox';
-import { MessageList } from '../components/MessageList';
-import { getMessages } from '../redux/actions/message';
-import { TReduxState } from '../redux/reducers';
+import MessageList from '../components/MessageList';
 
-interface IProps {
-  message: { messages: IMessage[] };
-  getMessages(): void;
-}
-
-const AppChat = ({ message, getMessages }: IProps) => {
+export const AppChat = () => {
   useEffect(() => {
-    getMessages();
     animateScroll.scrollToBottom();
   }, []);
 
@@ -28,7 +17,7 @@ const AppChat = ({ message, getMessages }: IProps) => {
         <h1>Realtime Chat</h1>
         <p>React / React Redux / Firebase Realtime Database</p>
       </Header>
-      <MessageList messages={message.messages} />
+      <MessageList />
       <ChatBox />
     </>
   );
@@ -73,13 +62,3 @@ const Header = styled.header`
     font-size: 0.8rem;
   }
 `;
-
-const mapStateToProps = (state: TReduxState): TReduxState => ({
-  message: state.message,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getMessages: bindActionCreators(getMessages, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AppChat);
